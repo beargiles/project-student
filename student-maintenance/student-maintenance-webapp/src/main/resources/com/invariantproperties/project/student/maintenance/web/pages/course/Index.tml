@@ -1,0 +1,41 @@
+<html t:type="layout" title="Course List"
+      t:sidebarTitle="Framework Version"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+
+    <t:zone t:id="zone">   
+        <p>
+            "Course" page
+        </p>
+
+        <t:actionlink t:id="create">Create...</t:actionlink><br/>
+ 
+        <t:grid source="courses" row="course" include="code, name,creationdate" add="edit,delete">
+            <p:codecell>
+                <t:actionlink t:id="view" context="course.uuid">${course.code}</t:actionlink>
+            </p:codecell>
+            <p:editcell>
+                <t:actionlink t:id="update" context="course.uuid">Edit</t:actionlink>
+            </p:editcell>
+            <p:deletecell>
+                <t:actionlink t:id="delete" context="course.uuid" t:mixins="Confirm" t:message="Delete ${course.name}?">Delete</t:actionlink>
+            </p:deletecell>
+            <p:empty>
+              <p>There are no courses to display; you can <t:actionlink t:id="create1">create</t:actionlink> one.</p>
+            </p:empty>
+        </t:grid>
+    </t:zone>
+
+    <p:sidebar>
+        <p>
+            [
+            <t:pagelink page="Index">Index</t:pagelink>
+            ]<br/>
+            [
+            <t:pagelink page="Course/Index">Courses</t:pagelink>
+            ]
+        </p>
+    </p:sidebar>
+
+</html>
