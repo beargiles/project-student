@@ -1,0 +1,187 @@
+/*
+ * This code was written by Bear Giles <bgiles@coyotesong.com> and he
+ * licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the
+ * License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Any contributions made by others are licensed to this project under
+ * one or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ * 
+ * Copyright (c) 2013 Bear Giles <bgiles@coyotesong.com>
+ */
+package com.invariantproperties.project.student.maintenance.web.pages.course;
+
+import org.apache.tapestry5.EventContext;
+import org.apache.tapestry5.annotations.ActivationRequestParameter;
+import org.apache.tapestry5.annotations.Property;
+
+import com.invariantproperties.project.student.maintenance.web.pages.course.Editor.Mode;
+
+public class Courses {
+
+    // The activation context
+
+    @Property
+    private Mode editorMode;
+
+    @Property
+    private Long editorCourseId;
+
+    // Screen fields
+
+    @Property
+    @ActivationRequestParameter
+    private String partialName;
+
+    @Property
+    private Long listCourseId;
+
+    // The code
+
+    // onPassivate() is called by Tapestry to get the activation context to put
+    // in the URL.
+
+    Object[] onPassivate() {
+
+        if (editorMode == null) {
+            return null;
+        } else if (editorMode == Mode.CREATE) {
+            return new Object[] { editorMode };
+        } else if (editorMode == Mode.REVIEW || editorMode == Mode.UPDATE) {
+            return new Object[] { editorMode, editorCourseId };
+        } else {
+            throw new IllegalStateException(editorMode.toString());
+        }
+
+    }
+
+    // onActivate() is called by Tapestry to pass in the activation context from
+    // the URL.
+
+    void onActivate(EventContext ec) {
+
+        if (ec.getCount() == 0) {
+            editorMode = null;
+            editorCourseId = null;
+        } else if (ec.getCount() == 1) {
+            editorMode = ec.get(Mode.class, 0);
+            editorCourseId = null;
+        } else {
+            editorMode = ec.get(Mode.class, 0);
+            editorCourseId = ec.get(Long.class, 1);
+        }
+
+    }
+
+    // setupRender() is called by Tapestry right before it starts rendering the
+    // page.
+
+    void setupRender() {
+        listCourseId = editorCourseId;
+    }
+
+    // /////////////////////////////////////////////////////////////////////
+    // CREATE
+    // /////////////////////////////////////////////////////////////////////
+
+    // Handle event "toCreate" from this page
+
+    void onToCreate() {
+        editorMode = Mode.CREATE;
+        editorCourseId = null;
+    }
+
+    // Handle event "cancelCreate" from component "editor"
+
+    void onCancelCreateFromEditor() {
+        editorMode = null;
+        editorCourseId = null;
+    }
+
+    // Handle event "successfulCreate" from component "editor"
+
+    void onSuccessfulCreateFromEditor(Long courseId) {
+        editorMode = Mode.REVIEW;
+        editorCourseId = courseId;
+    }
+
+    // Handle event "failedCreate" from component "editor"
+
+    void onFailedCreateFromEditor() {
+        editorMode = Mode.CREATE;
+        editorCourseId = null;
+    }
+
+    // /////////////////////////////////////////////////////////////////////
+    // REVIEW
+    // /////////////////////////////////////////////////////////////////////
+
+    // Handle event "selected" from component "list"
+
+    void onSelectedFromList(Long courseId) {
+        editorMode = Mode.REVIEW;
+        editorCourseId = courseId;
+    }
+
+    // /////////////////////////////////////////////////////////////////////
+    // UPDATE
+    // /////////////////////////////////////////////////////////////////////
+
+    // Handle event "toUpdate" from component "editor"
+
+    void onToUpdateFromEditor(Long courseId) {
+        editorMode = Mode.UPDATE;
+        editorCourseId = courseId;
+    }
+
+    // Handle event "cancelUpdate" from component "editor"
+
+    void onCancelUpdateFromEditor(Long courseId) {
+        editorMode = Mode.REVIEW;
+        editorCourseId = courseId;
+    }
+
+    // Handle event "successfulUpdate" from component "editor"
+
+    void onSuccessfulUpdateFromEditor(Long courseId) {
+        editorMode = Mode.REVIEW;
+        editorCourseId = courseId;
+    }
+
+    // Handle event "failedUpdate" from component "editor"
+
+    void onFailedUpdateFromEditor(Long courseId) {
+        editorMode = Mode.UPDATE;
+        editorCourseId = courseId;
+    }
+
+    // /////////////////////////////////////////////////////////////////////
+    // DELETE
+    // /////////////////////////////////////////////////////////////////////
+
+    // Handle event "successfulDelete" from component "editor"
+
+    void onSuccessfulDeleteFromEditor(Long courseId) {
+        editorMode = null;
+        editorCourseId = null;
+    }
+
+    // Handle event "failedDelete" from component "editor"
+
+    void onFailedDeleteFromEditor(Long courseId) {
+        editorMode = Mode.REVIEW;
+        editorCourseId = courseId;
+    }
+
+}

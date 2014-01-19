@@ -1,0 +1,9 @@
+ ----
+ Module com.invariantproperties.project.student:student-maintenance-webapp
+ ----
+
+com.invariantproperties.project.student:student-maintenance-webapp Documentation
+
+  This is where you can start to document your module.
+
+  Create new files in the Maven APT format, and update the site.xml file to point to them.
