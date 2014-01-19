@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="student-maintenance-webapp Application Test Suite" annotations="1.5">
+    <test name="Unit Tests">
+        <packages>
+            <package name="com.invariantproperties.project.student.maintenance"/>
+        </packages>
+    </test>
+</suite>
