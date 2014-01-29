@@ -22,9 +22,13 @@
  */
 package com.invariantproperties.project.student.domain;
 
+import java.util.List;
+
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,6 +45,8 @@ public class Term extends TestablePersistentObject {
     private static final long serialVersionUID = 1L;
 
     private String name;
+    private List<Section> sections;
+    private List<Classroom> classrooms;
 
     @Column(length = 80, unique = false, updatable = true)
     public String getName() {
@@ -49,5 +55,34 @@ public class Term extends TestablePersistentObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Get list of course sections for this term.
+     * 
+     * @return
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "term")
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
+    /**
+     * Get list of all available classrooms for this term. N.B., this is not a
+     * list of <i>unassigned</i> classrooms.
+     * 
+     * @return
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "term")
+    public List<Classroom> getClassrooms() {
+        return classrooms;
+    }
+
+    public void setClassrooms(List<Classroom> classrooms) {
+        this.classrooms = classrooms;
     }
 }

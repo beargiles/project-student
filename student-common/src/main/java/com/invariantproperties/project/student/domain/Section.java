@@ -26,10 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,8 +51,10 @@ public class Section extends TestablePersistentObject {
 
     private String name;
     private Course course;
+    private List<Instructor> instructors = new ArrayList<Instructor>();
     private List<Student> students = new ArrayList<Student>();
     private List<Classroom> classrooms = new ArrayList<Classroom>();
+    private Term term;
 
     @Column(length = 80, unique = false, updatable = true)
     public String getName() {
@@ -58,7 +65,9 @@ public class Section extends TestablePersistentObject {
         this.name = name;
     }
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "section", nullable = true)
+    // TODO add support in unit tests so nullable=false
     public Course getCourse() {
         return course;
     }
@@ -67,7 +76,18 @@ public class Section extends TestablePersistentObject {
         this.course = course;
     }
 
-    @Transient
+    @ManyToMany
+    @JoinTable(name = "section_instructors")
+    public List<Instructor> getInstructors() {
+        return instructors;
+    }
+
+    public void setInstructors(List<Instructor> instructors) {
+        this.instructors = instructors;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "section_students")
     public List<Student> getStudents() {
         return students;
     }
@@ -76,12 +96,23 @@ public class Section extends TestablePersistentObject {
         this.students = students;
     }
 
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "section")
     public List<Classroom> getClassrooms() {
         return classrooms;
     }
 
     public void setClassrooms(List<Classroom> classrooms) {
         this.classrooms = classrooms;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "term", nullable = true)
+    // TODO add support in unit tests so nullable=false
+    public Term getTerm() {
+        return term;
+    }
+
+    public void setTerm(Term term) {
+        this.term = term;
     }
 }

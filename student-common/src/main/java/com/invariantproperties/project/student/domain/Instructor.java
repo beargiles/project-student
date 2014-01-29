@@ -28,8 +28,8 @@ import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -66,7 +66,7 @@ public class Instructor extends TestablePersistentObject {
         this.emailAddress = emailAddress;
     }
 
-    @Transient
+    @ManyToMany(mappedBy = "instructors")
     public List<Section> getSections() {
         return sections;
     }

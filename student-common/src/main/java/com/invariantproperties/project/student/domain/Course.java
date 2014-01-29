@@ -25,11 +25,12 @@ package com.invariantproperties.project.student.domain;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -100,7 +101,7 @@ public class Course extends TestablePersistentObject {
         this.creditHours = creditHours;
     }
 
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
     public List<Section> getSections() {
         return sections;
     }
@@ -110,7 +111,8 @@ public class Course extends TestablePersistentObject {
     }
 
     public String toString() {
-        return String.format("[%s: %s, %s, '%s', '%s', %d]", this.getClass().getSimpleName(), getId(), getUuid(),
-                getCode(), getName(), getCreditHours());
+        return String.format("[%s: %s, %s, '%s', '%s', %d]", this.getClass()
+                .getSimpleName(), getId(), getUuid(), getCode(), getName(),
+                getCreditHours());
     }
 }

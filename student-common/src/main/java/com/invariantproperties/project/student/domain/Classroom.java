@@ -25,6 +25,8 @@ package com.invariantproperties.project.student.domain;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,6 +43,9 @@ public class Classroom extends TestablePersistentObject {
     private static final long serialVersionUID = 1L;
 
     private String name;
+    // time and day of week
+    private Term term; // indicates start and end date
+    private Section section;
 
     @Column(length = 80, unique = false, updatable = true)
     public String getName() {
@@ -49,5 +54,37 @@ public class Classroom extends TestablePersistentObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Get associated term - each term gets a new set of classrooms.
+     * 
+     * @return
+     */
+    @ManyToOne
+    @JoinColumn(name = "term", nullable = true)
+    // TODO add support in unit tests so nullable=false
+    public Term getTerm() {
+        return term;
+    }
+
+    public void setTerm(Term term) {
+        this.term = term;
+    }
+
+    /**
+     * Get section assigned to this classroom. It will be null if the classroom
+     * is unassigned.
+     * 
+     * @return
+     */
+    @ManyToOne
+    @JoinColumn(name = "section", nullable = true)
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
     }
 }
