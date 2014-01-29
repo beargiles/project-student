@@ -21,7 +21,7 @@
 			<groupId>com.invariantproperties.project.student</groupId>
 			<artifactId>student-common</artifactId>
 		</dependency>
-		<dependency>
+		<dependency> 
 			<groupId>com.invariantproperties.project.student</groupId>
 			<artifactId>student-ws-client</artifactId>
 		</dependency>
