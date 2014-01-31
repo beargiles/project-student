@@ -9,7 +9,7 @@
   <artifactId>student-maintenance</artifactId>
   <packaging>pom</packaging>
   <modules>
-  	<module>student-maintenance-selenium</module>
+    <!--<module>student-maintenance-selenium</module>-->
     <module>student-maintenance-webapp</module>
   </modules>
   <name>Project Student: maintenance tools</name>
