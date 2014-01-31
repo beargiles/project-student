@@ -28,11 +28,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 import com.invariantproperties.project.student.domain.Classroom;
 import com.invariantproperties.project.student.domain.TestRun;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * JPA Criteria metamodel for classrooms.
  * 
  * @author Bear Giles <bgiles@coyotesong.com>
  */
+@SuppressFBWarnings(value = "UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD", justification = "field is used by JPA Criteria reflection")
 @StaticMetamodel(Classroom.class)
 public class Classroom_ {
     public static volatile SingularAttribute<Classroom, TestRun> testRun;

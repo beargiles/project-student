@@ -27,12 +27,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import com.invariantproperties.project.student.domain.Term;
 import com.invariantproperties.project.student.domain.TestRun;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * JPA Criteria metamodel for terms.
  * 
  * @author Bear Giles <bgiles@coyotesong.com>
  */
+@SuppressFBWarnings(value = "UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD", justification = "field is used by JPA Criteria reflection")
 @StaticMetamodel(Term.class)
 public class Term_ {
     public static volatile SingularAttribute<Term, TestRun> testRun;

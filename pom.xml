@@ -531,6 +531,13 @@
 				<artifactId>esapi</artifactId>
 				<version>2.1.0</version>
 			</dependency>
+
+			<!-- misc -->
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>annotations</artifactId>
+				<version>2.0.3</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

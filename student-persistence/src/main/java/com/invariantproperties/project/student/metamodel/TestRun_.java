@@ -27,11 +27,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import com.invariantproperties.project.student.domain.TestRun;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * JPA Criteria metamodel for test runs
  * 
  * @author Bear Giles <bgiles@coyotesong.com>
  */
+@SuppressFBWarnings(value = "UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD", justification = "field is used by JPA Criteria reflection")
 @StaticMetamodel(TestRun.class)
 public class TestRun_ {
     public static volatile SingularAttribute<TestRun, String> uuid;

@@ -146,6 +146,12 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- misc -->
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>annotations</artifactId>
+		</dependency>
 	</dependencies>
 	<name>Project Student: persistence layer</name>
 </project>
