@@ -42,7 +42,7 @@
 		<module>student-api</module>
 		<module>student-business</module>
 		<module>student-webservices</module>
-		<module>student-webapp</module>
+		<!--<module>student-webapp</module>-->
 		<module>student-maintenance</module>
 	</modules>
 
