@@ -42,7 +42,7 @@
 		<module>student-api</module>
 		<module>student-business</module>
 		<module>student-webservices</module>
-		<!--<module>student-webapp</module>-->
+		<!--<module>student-webapp</module> -->
 		<module>student-maintenance</module>
 	</modules>
 
@@ -72,126 +72,128 @@
 			</resource>
 		</resources>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-					<optimize>true</optimize>
-				</configuration>
-			</plugin>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+						<optimize>true</optimize>
+					</configuration>
+				</plugin>
 
-			<!-- configuration used by integration tests -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<id>add-integration-test-sources</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-							<goal>add-test-resource</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/integration-test/java</source>
-							</sources>
-							<resources>
-								<resource>
-									<directory>src/integration-test/resources</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+				<!-- configuration used by integration tests -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
+					<executions>
+						<execution>
+							<id>add-integration-test-sources</id>
+							<phase>generate-test-sources</phase>
+							<goals>
+								<goal>add-test-source</goal>
+								<goal>add-test-resource</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>src/integration-test/java</source>
+								</sources>
+								<resources>
+									<resource>
+										<directory>src/integration-test/resources</directory>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 
-			<!-- regular unit tests -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12</version>
-				<configuration>
-					<!-- skips unit tests... -->
-					<skipTests>${skip.unit.tests}</skipTests>
-					<!-- skips integration tests -->
-					<excludes>
-						<exclude>**/*IntegrationTest.java</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
+				<!-- regular unit tests -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.12</version>
+					<configuration>
+						<!-- skips unit tests... -->
+						<skipTests>${skip.unit.tests}</skipTests>
+						<!-- skips integration tests -->
+						<excludes>
+							<exclude>**/*IntegrationTest.java</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
 
-			<!-- integration tests -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.12</version>
-				<executions>
-					<execution>
-						<id>integration-tests</id>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-						<configuration>
-							<skipTests>${skip.integration.tests}</skipTests>
-							<includes>
-								<include>**/*IntegrationTest.java</include>
-							</includes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+				<!-- integration tests -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.12</version>
+					<executions>
+						<execution>
+							<id>integration-tests</id>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+							<configuration>
+								<skipTests>${skip.integration.tests}</skipTests>
+								<includes>
+									<include>**/*IntegrationTest.java</include>
+								</includes>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 
-			<!-- create source jar -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<!-- produce source artifact for project main sources -->
-							<goal>jar-no-fork</goal>
-							<!-- produce test source artifact for project test sources -->
-							<goal>test-jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+				<!-- create source jar -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.1.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<!-- produce source artifact for project main sources -->
+								<goal>jar-no-fork</goal>
+								<!-- produce test source artifact for project test sources -->
+								<goal>test-jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.6.4.201312101107</version>
-				<configuration>
-					<destfile>${basedir}/target/coverage-reports/jacoco-unit.exec</destfile>
-					<datafile>${basedir}/target/coverage-reports/jacoco-unit.exec</datafile>
-				</configuration>
-				<executions>
-					<execution>
-						<id>jacoco-initialize</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>jacoco-site</id>
-						<phase>package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
- 		</plugins>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.6.4.201312101107</version>
+					<configuration>
+						<destfile>${basedir}/target/coverage-reports/jacoco-unit.exec</destfile>
+						<datafile>${basedir}/target/coverage-reports/jacoco-unit.exec</datafile>
+					</configuration>
+					<executions>
+						<execution>
+							<id>jacoco-initialize</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>jacoco-site</id>
+							<phase>package</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<dependencyManagement>
@@ -629,7 +631,7 @@
 			</build>
 		</profile>
 
-        <!-- create javadoc -->
+		<!-- create javadoc -->
 		<profile>
 			<id>javadoc</id>
 			<build>
@@ -719,9 +721,9 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>properties-maven-plugin</artifactId>
-		 				<version>1.0-alpha-2</version>
-		 				<executions>
-		 					<execution>
+						<version>1.0-alpha-2</version>
+						<executions>
+							<execution>
 								<phase>initialize</phase>
 								<goals>
 									<goal>read-project-properties</goal>
