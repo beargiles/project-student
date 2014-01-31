@@ -166,7 +166,7 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
+ 		</plugins>
 	</build>
 
 	<dependencyManagement>
@@ -689,15 +689,27 @@
 
 		<profile>
 			<id>sonar</id>
-			<properties>
-				<sonar.language>java</sonar.language>
-				<sonar.host.url>http://chaos:9000</sonar.host.url>
-				<sonar.jdbc.url>jdbc:postgresql://chaos/sonar</sonar.jdbc.url>
-				<sonar.jdbc.username>sonar</sonar.jdbc.username>
-				<sonar.jdbc.password>sonar</sonar.jdbc.password>
-			</properties>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>properties-maven-plugin</artifactId>
+		 				<version>1.0-alpha-2</version>
+		 				<executions>
+		 					<execution>
+								<phase>initialize</phase>
+								<goals>
+									<goal>read-project-properties</goal>
+								</goals>
+								<configuration>
+									<files>
+										<file>/home/bgiles/config/sonar.properties</file>
+									</files>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
